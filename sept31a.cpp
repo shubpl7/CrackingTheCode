@@ -72,5 +72,6 @@ int32_t main()
        VI a{6,7,2,3,4,5};
        cout<<FindPivot(a);
        cout<<"Shubham";
+       cout<<"I am in branch A";
        return 0;
 }
