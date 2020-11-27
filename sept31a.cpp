@@ -71,5 +71,6 @@ int32_t main()
        #endif
        VI a{6,7,2,3,4,5};
        cout<<FindPivot(a);
+       cout<<"Shubham";
        return 0;
 }
