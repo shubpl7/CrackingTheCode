@@ -18,12 +18,14 @@ class Graph{
        //VVI adj;
        VPII edges;
        VI parent;
+       VI ranks;
        public:
               Graph(int vert)
               {
                      this->V=vert;
                      // edges.resize(V);
                      parent.resize(V,-1);
+                     ranks.resize(V,1);
               }
               void addEdge(int a,int b)
               {
@@ -33,7 +35,8 @@ class Graph{
               {
                      if(parent[a]==-1)
                             return a;
-                     return find(parent[a]);
+                     parent[a]=find(parent[a]);
+                     return parent[a];
               }
               bool FindCycle()
               {
@@ -43,9 +46,22 @@ class Graph{
                             int b=edge.se;
                             int s1=find(a);
                             int s2=find(b);
+                            for(auto x: ranks)
+                                   cout<<x<<" ";
+                            cout<<endl;
                             if(s1!=s2)
                             {
-                                   parent[s2]=s1;
+                                   if(ranks[s2]>ranks[s1])
+                                   {
+                                          parent[s1]=s2;
+                                          ranks[s2]+=ranks[s1];
+                                   }
+                                   else
+                                   {
+                                          parent[s2]=s1;
+                                          ranks[s1]+=ranks[s2];
+                                   }
+                                   
                             }
                             else
                             {
@@ -71,7 +87,7 @@ int32_t main()
        g->addEdge(0,1);
        g->addEdge(1,2);
        g->addEdge(2,3);
-       //g->addEdge(3,0);
+       g->addEdge(3,0);
        cout<<g->FindCycle();
        return 0;
 }
