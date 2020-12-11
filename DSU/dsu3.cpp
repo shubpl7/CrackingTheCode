@@ -87,7 +87,7 @@ int32_t main()
                             flag=true;
               }
               if(flag)
-                     cout<<"Impossible\n";
+                     cout<<"impossible\n";
               else
                      cout<<ans<<endl;
               adj.clear();
