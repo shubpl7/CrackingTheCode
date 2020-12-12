@@ -1,3 +1,4 @@
+//https://www.spoj.com/problems/TRT/
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long 
@@ -14,50 +15,49 @@ typedef map<int,int> MPII;
 typedef set<int> SETI;
 typedef multiset<int> MSETI;
 int n;
-VVI memo;
-int dp(int *arr,int i, int j)
-{
-       //cout<<"dp "<<i<<" "<<j<<endl;
-       if(i>j)
-              return 0;
-       if(memo[i][j]!=-1)
-              return memo[i][j];
-       int k=n-(j-i);
-       int profit = max(k*arr[i]+dp(arr,i+1,j),k*arr[j]+dp(arr,i,j-1));
-       memo[i][j]=profit;
-       return profit;
-       
-}
-
-/*int bottomTop(int *arr)
+//VVI memo;
+VI arr;
+// int f(int i,int j)
+// {
+//        //cout<<"f--"<<i<<" "<<j<<endl;
+//        if(i>j)
+//               return 0;
+//        if(memo[i][j]!=-1)
+//               return memo[i][j];
+//        int df = n-(j-i);
+//        int profit = max(arr[i]*df+f(i+1,j),arr[j]*df+f(i,j-1));
+//        memo[i][j]=profit;
+//        return profit;
+// }
+int bottomup()
 {
        int dp[n+1][n+1];
        memset(dp,-1,sizeof(dp));
        for(int k=0;k<=n-1;k++)
        {
               int i=1;
-              for(int j=i+k;j<=n;j++,i++)
+              for(int j=i+k;j<=n;i++,j++)
               {
-                     int yr=n-(j-i);
+                     int df=n-(j-i);
                      if(i==j)
                      {
-                            dp[i][j]=max(yr*arr[i],yr*arr[j]);
+                            dp[i][j]=max(arr[i]*df,arr[j]*df);
                      }
                      else
-                            dp[i][j]=max(yr*arr[i]+dp[i+1][j],yr*arr[j]+dp[i][j-1]);
+                     {
+                            dp[i][j]=max(arr[i]*df+dp[i+1][j],arr[j]*df+dp[i][j-1]);
+                     }
+                     
               }
        }
        // for(int i=1;i<=n;i++)
        // {
        //        for(int j=1;j<=n;j++)
-       //        {
        //               cout<<dp[i][j]<<" ";
-
-       //        }
        //        cout<<endl;
        // }
        return dp[1][n];
-}*/
+}
 int32_t main()
 {
        ios_base::sync_with_stdio(false);
@@ -67,19 +67,12 @@ int32_t main()
        freopen("../output.txt","w",stdout);
        #endif
        cin>>n;
-       int arr[n+1];
+       arr.resize(n+1);
+       //memo.resize(n+1,VI(n+1,-1));
        for(int i=1;i<=n;i++)
+       {
               cin>>arr[i];
-       memo.resize(n+1,VI(n+1,-1));
-       cout<<dp(arr,1,n)<<endl;
-       // for(int i=1;i<=n;i++)
-       // {
-       //        for(int j=1;j<=n;j++)
-       //        {
-       //               cout<<memo[i][j]<<" ";
-       //        }
-       //        cout<<endl;
-       // }
-       // cout<<bottomTop(arr);
+       }
+       cout<<bottomup()<<endl;
        return 0;
 }
