@@ -33,14 +33,17 @@ public:
     {
         if (mp.find(x) == mp.end())
         {
-            if (currSize == capacity)
+            //miss case
+            if (currSize == capacity)//cache is full
             {
+                //Page replacement
                 node *temp = rear;
                 rear = rear->prev;
                 temp->prev = NULL;
                 rear->next = NULL;
-                delete temp;
                 mp.erase(temp->data);
+                delete temp;
+                
                 node *temp2 = new node;
                 temp2->data = x;
                 temp2->next = head;
@@ -50,6 +53,7 @@ public:
             }
             else
             {
+                //miss but cache is not full
                 node *temp2 = new node;
                 temp2->data = x;
                 if (currSize == 0)
@@ -67,7 +71,7 @@ public:
                 currSize++;
             }
         }
-        else
+        else // hit case
         {
             if (currSize == 1)
                 return;
